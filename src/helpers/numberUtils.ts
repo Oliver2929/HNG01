@@ -8,11 +8,14 @@ export const isArmstrong = (num: number): boolean => {
 };
 
 export const sumOfDigits = (num: number): number => {
-  return Math.abs(num)
+  const isNegative = num < 0;
+  const digitSum = Math.abs(num)
     .toString()
     .split("")
     .map(Number)
     .reduce((sum, digit) => sum + digit, 0);
+
+  return isNegative ? -digitSum : digitSum;
 };
 
 export const isPrime = (num: number): boolean => {
