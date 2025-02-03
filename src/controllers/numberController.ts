@@ -32,7 +32,7 @@ const classifyNumber = (num: number) => {
 export const classifyNumberHandler = async (req: Request, res: Response) => {
   const { number } = req.query;
 
-  if (!number || !Number.isInteger(Number(number))) {
+  if (!number || isNaN(Number(number)) || !Number.isInteger(Number(number))) {
     res.status(400).json({
       number,
       error: true,
@@ -40,12 +40,6 @@ export const classifyNumberHandler = async (req: Request, res: Response) => {
   }
 
   const num = parseInt(number as string, 10);
-
-  if (isNaN(num)) {
-    res.status(400).json({
-      error: "Invalid integer. Unable to parse the input to a valid integer.",
-    });
-  }
 
   const { properties, funFact } = await classifyNumber(num);
 
@@ -55,7 +49,8 @@ export const classifyNumberHandler = async (req: Request, res: Response) => {
     const response = await fetch(`http://numbersapi.com/${num}/math?json`);
 
     const data = await response.json();
-    const funFactApi = data.text;
+    const funFactApi =
+      data.text || "No fun fact available from external source.";
 
     res.status(200).json({
       number: num,
