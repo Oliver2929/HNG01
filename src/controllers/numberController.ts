@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import axios from "axios";
 import {
   isArmstrong,
   sumOfDigits,
@@ -47,8 +46,10 @@ export const classifyNumberHandler = async (req: Request, res: Response) => {
   const digitSum = sumOfDigits(num);
 
   try {
-    const response = await axios.get(`http://numbersapi.com/${num}?json`);
-    const funFactApi = response.data.text;
+    const response = await fetch(`http://numbersapi.com/${num}?json`);
+
+    const data = await response.json();
+    const funFactApi = data.text;
 
     res.status(200).json({
       number: num,
