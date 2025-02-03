@@ -4,10 +4,12 @@ import numberRoutes from "./routes/numberRoutes";
 
 const app: Application = express();
 
-// Enable CORS
 app.use(cors());
 
-// Use the number classification routes
 app.use(numberRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to my API!");
+});
 
 export default app;
