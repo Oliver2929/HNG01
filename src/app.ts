@@ -9,7 +9,7 @@ app.use(cors());
 app.use(numberRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to my API!");
+  res.status(200).json({ message: "Welcome to my API!" });
 });
 
 export default app;
