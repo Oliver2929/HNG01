@@ -46,7 +46,7 @@ export const classifyNumberHandler = async (req: Request, res: Response) => {
   const digitSum = sumOfDigits(num);
 
   try {
-    const response = await fetch(`http://numbersapi.com/${num}?json`);
+    const response = await fetch(`http://numbersapi.com/${num}/math?json`);
 
     const data = await response.json();
     const funFactApi = data.text;
