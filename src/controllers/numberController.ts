@@ -33,7 +33,7 @@ const classifyNumber = (num: number) => {
 export const classifyNumberHandler = async (req: Request, res: Response) => {
   const { number } = req.query;
 
-  if (!number || isNaN(Number(number))) {
+  if (!number || isNaN(Number(number)) || !Number.isInteger(Number(number))) {
     res.status(400).json({
       number,
       error: true,
@@ -43,6 +43,7 @@ export const classifyNumberHandler = async (req: Request, res: Response) => {
   const num = parseInt(number as string);
 
   const { properties, funFact } = await classifyNumber(num);
+
   const digitSum = sumOfDigits(num);
 
   try {
