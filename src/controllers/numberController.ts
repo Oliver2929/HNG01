@@ -32,14 +32,20 @@ const classifyNumber = (num: number) => {
 export const classifyNumberHandler = async (req: Request, res: Response) => {
   const { number } = req.query;
 
-  if (!number || isNaN(Number(number))) {
+  if (!number || !Number.isInteger(Number(number))) {
     res.status(400).json({
       number,
       error: true,
     });
   }
 
-  const num = parseInt(number as string);
+  const num = parseInt(number as string, 10);
+
+  if (isNaN(num)) {
+    res.status(400).json({
+      error: "Invalid integer. Unable to parse the input to a valid integer.",
+    });
+  }
 
   const { properties, funFact } = await classifyNumber(num);
 
